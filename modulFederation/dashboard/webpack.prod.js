@@ -19,28 +19,16 @@ const prodConfig = {
   },
   module: {
     rules: [
-      {
-        test: /\.css$/i,
-        use: [MiniCssExtractPlugin.loader, "css-loader"],
-      },
-      {
-        test: /\.scss$/i,
-        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
-      },
     ],
   },
   plugins: [
     new TerserPlugin(),
-    new MiniCssExtractPlugin({
-      filename: "[name].[contenthash].css",
-    }),
     new ModuleFederationPlugin({
-      name: "HelloWorldApp",
-      filename: "remoteEntry.js",
-      exposes: {
-        "./HelloWordlButton": "./src/components/hello-world-button/hello-world-button.js",
-        "./HelloWorldPage": "./src/components/hello-world-page/hello-world-pageg.js"
-      },
+      name: "dashboard",
+      remotes: {
+        HelloWorldApp: "HelloWorldApp@http://localhost:3000/remoteEntry.js",
+        KiwiApp: "KiwiApp@http://localhost:3001/remoteEntry.js"
+      }
     }),
   ],
 };

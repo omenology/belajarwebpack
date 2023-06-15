@@ -25,8 +25,12 @@ const devConfig = {
   plugins: [
     new ModuleFederationPlugin({
       name: "KiwiApp",
+      filename: "remoteEntry.js",
       remotes: {
         HelloWorldApp: "HelloWorldApp@http://localhost:3000/remoteEntry.js",
+      },
+      exposes: {
+        "./KiwiPage": "./src/components/kiwi-page/kiwi-page.js",
       },
     }),
   ],

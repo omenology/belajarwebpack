@@ -7,11 +7,11 @@ const commonConfig = require("./webpack.common");
 const devConfig = {
   output: {
     filename: "[name].js",
-    publicPath: "http://localhost:3000/",
+    publicPath: "http://localhost:3002/",
   },
   mode: "development",
   devServer: {
-    port: 3000,
+    port: 3002,
     static: {
       directory: path.resolve(__dirname, "./dist"),
     },
@@ -24,12 +24,11 @@ const devConfig = {
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: "HelloWorldApp",
-      filename: "remoteEntry.js",
-      exposes: {
-        "./HelloWordlButton": "./src/components/hello-world-button/hello-world-button.js",
-        "./HelloWorldPage": "./src/components/hello-world-page/hello-world-pageg.js"
-      },
+      name: "dashboard",
+      remotes: {
+        HelloWorldApp: "HelloWorldApp@http://localhost:3000/remoteEntry.js",
+        KiwiApp: "KiwiApp@http://localhost:3001/remoteEntry.js"
+      }
     }),
   ],
 };
